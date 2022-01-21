@@ -14,9 +14,8 @@ const scorePlayer1El = document.querySelector('#score--1');
 
 // VARIABLES
 let activePlayer = 0;
-let player0Score = 0;
-let player1Score = 0;
 let score = 0;
+const scores = [0, 0];
 
 // FUNCTIONS
 // GENERATING RANDOM NUMBER 1 => 6
@@ -46,13 +45,13 @@ const changeActivePlayer = function () {
 
 // CHECKING WHO WINS
 const checkWin = function () {
-  if (player0Score >= 10) {
+  if (scores[0] >= 100) {
     currentPlayer0El.textContent = 'WINNER';
     currentPlayer1El.textContent = 'LOOSER';
     btnHold.classList.add('hidden');
     btnRoll.classList.add('hidden');
     diceRoll.setAttribute('src', `images/cup.png`);
-  } else if (player1Score >= 10) {
+  } else if (scores[1] >= 100) {
     currentPlayer1El.textContent = 'WINNER';
     currentPlayer0El.textContent = 'LOOSER';
     btnHold.classList.add('hidden');
@@ -79,14 +78,15 @@ const addValueCurrent = function (randomNumber) {
 // BUTTON HOLD A VALUE
 const holdValue = function () {
   if (activePlayer === 0) {
-    player0Score += score;
-    scorePlayer0El.textContent = player0Score;
+    scores[0] += score;
+    scorePlayer0El.textContent = scores[0];
   } else {
-    player1Score += score;
-    scorePlayer1El.textContent = player1Score;
+    scores[1] += score;
+    scorePlayer1El.textContent = scores[1];
   }
   changeActivePlayer();
   checkWin();
+  console.log(scores);
 };
 
 // RESET GAME
@@ -95,8 +95,7 @@ const newGame = function () {
   diceRoll.classList.add('hidden');
   btnHold.classList.remove('hidden');
   btnRoll.classList.remove('hidden');
-  player0Score = 0;
-  player1Score = 0;
+  scores[(0, 0)];
   score;
   currentPlayer0El.textContent = 0;
   currentPlayer1El.textContent = 0;
