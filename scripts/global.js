@@ -47,6 +47,9 @@ const win = function () {
 const checkWin = function () {
   if (scores[activePlayer] >= 100) {
     document.querySelector(`#current--${activePlayer}`).textContent = 'WINNER';
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner', 'name');
     win();
   }
 };
@@ -75,6 +78,8 @@ const newGame = function () {
   diceRoll.classList.add('hidden');
   btnHold.classList.remove('hidden');
   btnRoll.classList.remove('hidden');
+  player0.classList.remove('player--winner', 'name');
+  player1.classList.remove('player--winner', 'name');
   scores = [0, 0];
   score = 0;
   currentPlayer0El.textContent = 0;
