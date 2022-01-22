@@ -13,9 +13,9 @@ const scorePlayer0El = document.querySelector('#score--0');
 const scorePlayer1El = document.querySelector('#score--1');
 
 // VARIABLES
-let activePlayer = 0;
-let score = 0;
-let scores = [0, 0];
+let activePlayer = 0,
+  score = 0,
+  scores = [0, 0];
 
 // FUNCTIONS
 // GENERATING RANDOM NUMBER 1 => 6
@@ -40,13 +40,14 @@ const changeActivePlayer = function () {
 const win = function () {
   btnHold.classList.add('hidden');
   btnRoll.classList.add('hidden');
-  diceRoll.setAttribute('src', `images/cup.png`);
+  diceRoll.classList.add('hidden');
 };
 
 // CHECKING WHO WINS
 const checkWin = function () {
-  if (scores[activePlayer] >= 100) {
-    document.querySelector(`#current--${activePlayer}`).textContent = 'WINNER';
+  if (scores[activePlayer] >= 10) {
+    document.querySelector(`#current--${activePlayer}`).textContent =
+      'WINNER 🏆';
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner', 'name');
@@ -79,7 +80,7 @@ const newGame = function () {
   btnHold.classList.remove('hidden');
   btnRoll.classList.remove('hidden');
   player0.classList.remove('player--winner', 'name');
-  player1.classList.remove('player--winner', 'name');
+  player1.classList.remove('player--winner', 'name', 'player--active');
   scores = [0, 0];
   score = 0;
   currentPlayer0El.textContent = 0;
