@@ -15,7 +15,7 @@ const scorePlayer1El = document.querySelector('#score--1');
 // VARIABLES
 let activePlayer = 0;
 let score = 0;
-const scores = [0, 0];
+let scores = [0, 0];
 
 // FUNCTIONS
 // GENERATING RANDOM NUMBER 1 => 6
@@ -28,35 +28,26 @@ const randomNumber = function () {
 
 // CHANGING PLAYER 0 => 1 OR 1 => 0
 const changeActivePlayer = function () {
-  if (activePlayer === 0) {
-    player0.classList.remove('player--active');
-    player1.classList.add('player--active');
-    activePlayer = 1;
-    score = 0;
-    currentPlayer0El.textContent = score;
-  } else {
-    player1.classList.remove('player--active');
-    player0.classList.add('player--active');
-    activePlayer = 0;
-    score = 0;
-    currentPlayer1El.textContent = score;
-  }
+  score = 0;
+  document.querySelector(`#current--${activePlayer}`).textContent = score;
+  player0.classList.toggle('player--active');
+  player1.classList.toggle('player--active');
+  checkWin();
+  activePlayer = activePlayer === 0 ? 1 : 0;
+};
+
+// REMOVING BUTTONS AND ADDING CUP
+const win = function () {
+  btnHold.classList.add('hidden');
+  btnRoll.classList.add('hidden');
+  diceRoll.setAttribute('src', `images/cup.png`);
 };
 
 // CHECKING WHO WINS
 const checkWin = function () {
-  if (scores[0] >= 100) {
-    currentPlayer0El.textContent = 'WINNER';
-    currentPlayer1El.textContent = 'LOOSER';
-    btnHold.classList.add('hidden');
-    btnRoll.classList.add('hidden');
-    diceRoll.setAttribute('src', `images/cup.png`);
-  } else if (scores[1] >= 100) {
-    currentPlayer1El.textContent = 'WINNER';
-    currentPlayer0El.textContent = 'LOOSER';
-    btnHold.classList.add('hidden');
-    btnRoll.classList.add('hidden');
-    diceRoll.setAttribute('src', 'images/cup.png');
+  if (scores[activePlayer] >= 100) {
+    document.querySelector(`#current--${activePlayer}`).textContent = 'WINNER';
+    win();
   }
 };
 
@@ -66,37 +57,26 @@ const addValueCurrent = function (randomNumber) {
     changeActivePlayer();
   } else {
     score += randomNumber;
-    if (activePlayer === 0) {
-      currentPlayer0El.textContent = score;
-    } else if (activePlayer === 1) {
-      currentPlayer1El.textContent = score;
-    }
+    // dynamic selection of active player and assign score
+    document.querySelector(`#current--${activePlayer}`).textContent = score;
   }
-  checkWin();
 };
 
 // BUTTON HOLD A VALUE
 const holdValue = function () {
-  if (activePlayer === 0) {
-    scores[0] += score;
-    scorePlayer0El.textContent = scores[0];
-  } else {
-    scores[1] += score;
-    scorePlayer1El.textContent = scores[1];
-  }
+  scores[activePlayer] += score;
+  document.querySelector(`#score--${activePlayer}`).textContent =
+    scores[activePlayer];
   changeActivePlayer();
-  checkWin();
-  console.log(scores);
 };
 
 // RESET GAME
 const newGame = function () {
-  changeActivePlayer();
   diceRoll.classList.add('hidden');
   btnHold.classList.remove('hidden');
   btnRoll.classList.remove('hidden');
-  scores[(0, 0)];
-  score;
+  scores = [0, 0];
+  score = 0;
   currentPlayer0El.textContent = 0;
   currentPlayer1El.textContent = 0;
   scorePlayer0El.textContent = 0;
